@@ -9,21 +9,21 @@ getRandomNumber = (max) => {
     return Math.floor(Math.random() * max)
 }
 
-playerSelection = () => {
-    let selection = "";
-    do {
-        selection = prompt("Please choose a weapon");
-        if(!selection || !isValidSelection(selection.toLowerCase())) {
-            alert("Please select between, rock, paper, or scissors")
-        }
-    } while (!isValidSelection(selection.toLowerCase()));
+// playerSelection = () => {
+//     let selection = "";
+//     do {
+//         selection = prompt("Please choose a weapon");
+//         if(!selection || !isValidSelection(selection.toLowerCase())) {
+//             alert("Please select between, rock, paper, or scissors")
+//         }
+//     } while (!isValidSelection(selection.toLowerCase()));
     
-    return selection.toLowerCase();
-}
+//     return selection.toLowerCase();
+// }
 
-function isValidSelection(selection) {
-    return selection == "rock" || selection == "paper" || selection == "scissors";
-}
+// function isValidSelection(selection) {
+//     return selection == "rock" || selection == "paper" || selection == "scissors";
+// }
 
 playRound = (playerSelection, computerSelection) => {
     if (playerSelection == computerSelection) {
@@ -45,11 +45,25 @@ playRound = (playerSelection, computerSelection) => {
     }
 }
 
-displayResult = (playerWon, playerSelection, computerSelection) => {
-    let youWin = `You win! ${playerSelection} beats ${computerSelection}`;
-    let youLose = `You lose! ${computerSelection} beats ${playerSelection}`;
+displayResult = (result, playerSelection, computerSelection) => {
+    clearResult();
 
-    return playerWon ? youWin : youLose;
+    if(result == "tie") {
+        currentRound.textContent = "It's a tie"
+    }
+    else {
+        let youWin = `You win! ${playerSelection} beats ${computerSelection}`;
+        let youLose = `You lose! ${computerSelection} beats ${playerSelection}`;
+
+        result ? playerScore++ : computerScore++;
+        currentRound.textContent = result ? youWin : youLose;
+    }
+    
+}
+
+clearResult = () => {
+    //clear the result before playing
+    currentRound.textContent = "";
 }
 
 game = () => {
@@ -75,15 +89,48 @@ game = () => {
 }
 
 calculateFinalResult = (playerScore, computerScore) => {
-    if(playerScore == computerScore) {
-        console.log(`It's a tie, the score is ${playerScore} to ${computerScore}`);
-    }
-    else {
-        let finalResult = playerScore > computerScore ? `You win, ${playerScore} to ${computerScore}`: 
-        `You lose, ${playerScore} to ${computerScore}`;
-        console.log(finalResult);
+    return playerScore > computerScore ? `You win, ${playerScore} to ${computerScore}`: 
+    `You lose, ${playerScore} to ${computerScore}`;
+}
+
+play = (e) => {    
+    let playerSelection = e.target.value;
+    let computerSelection = computerPlay();
+
+    let result = playRound(playerSelection, computerSelection)
+
+    displayResult(result, playerSelection, computerSelection);
+    displayTotal();
+    if(playerScore == winsNeeded || computerScore == winsNeeded) {
+        let finalResult = calculateFinalResult(playerScore, computerScore);
+        window.alert(finalResult)
+        resetGame();
     }
 }
 
+displayTotal = () => {
+    playerTotal.textContent = `${playerScore}`;
+    computerTotal.textContent = `${computerScore}`;
+}
 
-game();
+resetGame = () => {
+    playerScore = 0;
+    computerScore = 0;
+    clearResult();
+    displayTotal();
+}
+
+//start of game
+let winsNeeded = 3;
+let playerTotal = document.querySelector(".playerTotal");
+let computerTotal = document.querySelector(".computerTotal");
+let currentRound = document.querySelector(".currentRound");
+
+const buttons = document.querySelectorAll('.btn');
+buttons.forEach(function(button) {
+    button.addEventListener("click", play)
+});
+
+let playerScore = 0;
+let computerScore = 0;
+displayTotal();

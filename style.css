@@ -1,0 +1,34 @@
+.header, .weapons {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weapons {
+    flex: 1;
+}
+
+.btn {
+    width: 250px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.totalScore {
+    display: flex;   
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+}
+
+.playerTotal, .separator, .computerTotal {
+    display: flex;
+    
+}

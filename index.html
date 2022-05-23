@@ -5,10 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
-<script src="index.js"></script>
+
 
 <body>
-    
+    <div class="header">Rock Paper Scissors</div>
+    <div class="weapons">
+        <button class="btn rock" value="rock">rock</button>
+        <button class="btn paper" value="paper">paper</button>
+        <button class="btn scissors" value="scissors">scissors</button>
+    </div>
+    <div class="results">
+        <div class="currentRound"></div>
+        <div class="totalScore">
+            <div class="playerTotal"></div>
+            <div class="separator">:</div>
+            <div class="computerTotal"></div>
+        </div>
+    </div>
 </body>
 </html>
+
+<script src="index.js"></script>
